@@ -25,6 +25,8 @@ I added up to 10 test suits to test the python code. The tests take into the con
 ## Run:
 A bash script called run.sh in the root directory could be used to run both of the two python files.
 
+use command ./run.sh  or bash ./run.sh
+
 The input and output files are placed in default /input and /output folders and use a run.bash to run the fixed path files. Here if you want to manually specify the files path, make sure that the path is a full path for the input or output file. 
 
 

@@ -20,24 +20,24 @@ def checkValidation(splits):
     otherid = splits[15]
     if (otherid  != "" and  otherid  != "NaN" and otherid  != "NaT" \
                                     and otherid  != "NA"):
-        print ("OTHER_ID is not NULL")
+        #print ("OTHER_ID is not NULL")
         return 0
     if (zipcode  == "" or zipcode  == "NaN" or zipcode  == "NaT" \
                                     and zipcode  != "NA"):
-        print ("ZIP_CODE is not NULL")
+        #print ("ZIP_CODE is NULL")
         return 0
     if (cmte == "" or cmte == "NaN" or cmte == "NaT" \
                                     and cmte != "NA"):
-        print ("CMTE_ID is NULL")
+        #print ("CMTE_ID is NULL")
         return 0
     if (amount == "" or amount == "NaN" or amount =="NaT" \
                                     and amount != "NA"):
-        print ("contribution is NULL")
+        #print ("contribution is NULL")
         return 0
 
     #check digits of the zipcode
     if not re.match("[0-9/]+$", str(zipcode)):
-        print "zipcode are not all the digits"
+        #print "zipcode are not all the digits"
         return 0
     if (zipcodelen != 9 and zipcodelen != 5):
         print "zipcode len is invalid"
@@ -45,7 +45,7 @@ def checkValidation(splits):
     try:
         amount_f = float (amount)
     except ValueError:
-        print ("this is a invalid number of contribution")
+        #print ("this is a invalid number of contribution")
         return 0
     return 1
 
@@ -94,7 +94,8 @@ def find_political_donors_zip(input_file, output_file):
             sumvalue = float(splits[14])
             df_zipcode.loc[index] = [cmte, zipcode, amount, count, sumvalue]
             index = index + 1
-            df = df_zipcode.groupby(['CMTE_ID', 'ZIP_CODE'])\
+            df_zipcode2= df_zipcode[(df_zipcode.CMTE_ID == cmte) & (df_zipcode.ZIP_CODE == zipcode)]
+            df = df_zipcode2.groupby(['CMTE_ID', 'ZIP_CODE'])\
                                .agg({'TRANSACTION_AMT': 'mean', \
                                'TRANSACTION_COUNT':'count', \
                                'TRANSACTION_SUM':'sum' })\
@@ -106,9 +107,8 @@ def find_political_donors_zip(input_file, output_file):
                                 .round(0).astype(np.int64)
             df['TRANSACTION_SUM'] = df['TRANSACTION_SUM']\
                                 .round(0).astype(np.int64)
-                                        
-            df_out = df[(df.CMTE_ID == cmte) & (df.ZIP_CODE == zipcode)]
-            record = df_out.iloc[0]
+                                    
+            record = df.iloc[0]
             mean = str(record['TRANSACTION_MEAN'])
             count = str(record['TRANSACTION_COUNT'])
             amount = str(record['TRANSACTION_SUM'])
