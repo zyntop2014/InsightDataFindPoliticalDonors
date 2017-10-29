@@ -1,9 +1,9 @@
-#Insight Date Challenge
+# Insight Date Challenge
 This is the directory where your program would find any test input files.
 
-Purpose: This is a project for Insight Data Code Callenge
+## Purpose: This is a project for Insight Data Code Callenge
 
-Submit files:
+## Submit files:
 
 The python script is placed under the src folder. 
 
@@ -14,15 +14,15 @@ this is the file to solve the first part. It implements the challenge 1, which i
 The second script find_political_donors_zip.py computes the sum, mean and count of the contributions for each combination of date and receiptant. The output file is medianvals_by_date.txt placed in the path of /output/medianvals_by_date.txt  has the calculated median, total dollar amount and total number of contributions by recipient and date.
 
 
-Tools:
+## Tools:
 This script makes use of the following libraries of python and the python version is 2.7.13.
 1. pandas
 2. numpy 
 
-Tests:
+## Tests:
 I added up to 10 test suits to test the python code. The tests take into the considerations as described in the readme of the data challenge website. For each test suit, there is a readme.md to describe the test suit purpose.
 
-Run:
+## Run:
 A bash script called run.sh in the root directory could be used to run both of the two python files.
 
 The input and output files are placed in default /input and /output folders and use a run.bash to run the fixed path files. Here if you want to manually specify the files path, make sure that the path is a full path for the input or output file. 
