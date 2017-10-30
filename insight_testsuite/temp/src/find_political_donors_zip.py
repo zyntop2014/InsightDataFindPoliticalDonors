@@ -105,7 +105,7 @@ def find_political_donors_zip(input_file, output_file):
 
                 pre_count = df_zipcode2.iloc[0]['TRANSACTION_COUNT'] 
         
-                total_sum = sumvalue + float(pre_sum)
+                total_sum = float(sumvalue) + float(pre_sum)
                 df_zipcode.loc[indexid, 'TRANSACTION_SUM'] = total_sum
                 df_zipcode.loc[indexid, 'TRANSACTION_COUNT'] = int (1 + pre_count)
                 df_zipcode.loc[indexid, 'TRANSACTION_MEAN'] = float(total_sum/float(1+pre_count))

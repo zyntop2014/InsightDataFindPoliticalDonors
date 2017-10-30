@@ -90,26 +90,20 @@ def find_political_donors_zip(input_file, output_file):
             zipcode = splits[10][0:5]
             cmte = splits[0]
             sumvalue = float(splits[14])
-            # print df_zipcode
             df_zipcode2= df_zipcode[(df_zipcode.CMTE_ID == cmte) & (df_zipcode.ZIP_CODE == zipcode)]
-            
-            
+              
             if (df_zipcode2.size == 0):
                 indexid = index 
                 df_zipcode.loc[index] = [index, cmte, zipcode, sumvalue, 1, sumvalue]  
                 index = index + 1
-                # print df_zipcode  
             else:
                 indexid = df_zipcode2.iloc[0]["INDEXID"]
                 pre_sum = df_zipcode2.iloc[0]['TRANSACTION_SUM']
-
                 pre_count = df_zipcode2.iloc[0]['TRANSACTION_COUNT'] 
-        
-                total_sum = sumvalue + float(pre_sum)
+                total_sum = float(sumvalue) + float(pre_sum)
                 df_zipcode.loc[indexid, 'TRANSACTION_SUM'] = total_sum
                 df_zipcode.loc[indexid, 'TRANSACTION_COUNT'] = int (1 + pre_count)
-                df_zipcode.loc[indexid, 'TRANSACTION_MEAN'] = float(total_sum/float(1+pre_count))
-                                  
+                df_zipcode.loc[indexid, 'TRANSACTION_MEAN'] = float(total_sum/float(1+pre_count))                    
             record = df_zipcode.iloc[indexid]
             mean = str(int(round(record['TRANSACTION_MEAN'])))
             count = str(record['TRANSACTION_COUNT'])
