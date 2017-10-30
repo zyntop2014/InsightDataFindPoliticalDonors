@@ -80,7 +80,7 @@ def find_political_donors_zip(input_file, output_file):
     df_zipcode = pd.DataFrame(columns=['INDEXID','CMTE_ID', 'ZIP_CODE', 'TRANSACTION_MEAN', \
                             'TRANSACTION_COUNT','TRANSACTION_SUM'])
     index =0;
-    df_zipcode = df_zipcode.astype(dtype= {"INDEXID": "int64","TRANSACTION_MEAN":"int64", "TRANSACTION_COUNT":"int64","TRANSACTION_SUM":"int64"})
+    df_zipcode = df_zipcode.astype(dtype= {"INDEXID": "int64","TRANSACTION_MEAN":"float64", "TRANSACTION_COUNT":"int64","TRANSACTION_SUM":"float64"})
     with open(input_file, "r") as fin:
         for line in fin:
             splits = line.split("|")
@@ -106,12 +106,12 @@ def find_political_donors_zip(input_file, output_file):
                 pre_count = df_zipcode2.iloc[0]['TRANSACTION_COUNT'] 
         
                 total_sum = sumvalue + float(pre_sum)
-                df_zipcode.loc[indexid, 'TRANSACTION_SUM'] = int(total_sum)
+                df_zipcode.loc[indexid, 'TRANSACTION_SUM'] = total_sum
                 df_zipcode.loc[indexid, 'TRANSACTION_COUNT'] = int (1 + pre_count)
-                df_zipcode.loc[indexid, 'TRANSACTION_MEAN'] = int(round(total_sum/float(1+pre_count))) 
+                df_zipcode.loc[indexid, 'TRANSACTION_MEAN'] = float(total_sum/float(1+pre_count))
                                   
             record = df_zipcode.iloc[indexid]
-            mean = str(int(record['TRANSACTION_MEAN']))
+            mean = str(int(round(record['TRANSACTION_MEAN'])))
             count = str(record['TRANSACTION_COUNT'])
             amount = str(int(record['TRANSACTION_SUM']))
             line = cmte + '|' + zipcode + '|' + mean + '|' + count + '|' + amount  
